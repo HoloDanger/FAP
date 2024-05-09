@@ -129,7 +129,7 @@
 
             .details-container {
                 width: 400px;
-                height: 180px;
+                height: 190px;
                 margin: 100px auto;
                 background-color: #fff;
                 border-radius: 5px;
@@ -145,6 +145,7 @@
                 display: block;
                 margin: 0 auto;
                 margin-bottom: 20px;
+                margin-top: 10px;
             }
 
             .details-form {
