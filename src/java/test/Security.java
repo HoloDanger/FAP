@@ -1,63 +1,46 @@
 package test;
 
-
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletContext;
-import org.apache.commons.codec.binary.*;
+import org.apache.commons.codec.binary.Base64;
 
 public class Security {
 
-    private static String encryptionKey;
-    private static String cipherAlgorithm;
-    private static ServletContext servletContext;
-
-    public static String encrypt(String strToEncrypt, String key) {
-        String encryptedString = null;
+    public static String encrypt(String strToEncrypt, ServletContext servletContext) {
         try {
-            if (encryptionKey == null || cipherAlgorithm == null) {
-                encryptionKey = servletContext.getInitParameter("ENCRYPTION_KEY");
-                cipherAlgorithm = servletContext.getInitParameter("CIPHER_ALGORITHM");
-            }
-
+            String encryptionKey = servletContext.getInitParameter("ENCRYPTION_KEY");
+            String cipherAlgorithm = servletContext.getInitParameter("CIPHER_ALGORITHM");
             Cipher cipher = getCipherInstance(cipherAlgorithm);
-            final SecretKeySpec secretKey = getSecretKey(encryptionKey);
+            final SecretKeySpec secretKey = getSecretKey(encryptionKey, "AES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            encryptedString = Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
+            return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            return null;
         }
-        return encryptedString;
     }
 
-    public static String decrypt(String codeDecrypt, ServletContext servletContext) throws Exception {
-        String decryptedString = null;
+    public static String decrypt(String codeDecrypt, ServletContext servletContext) {
         try {
-            if (encryptionKey == null || cipherAlgorithm == null) {
-                encryptionKey = servletContext.getInitParameter("ENCRYPTION_KEY");
-                cipherAlgorithm = servletContext.getInitParameter("CIPHER_ALGORITHM");
-            }
-
+            String encryptionKey = servletContext.getInitParameter("ENCRYPTION_KEY");
+            String cipherAlgorithm = servletContext.getInitParameter("CIPHER_ALGORITHM");
             Cipher cipher = getCipherInstance(cipherAlgorithm);
-            final SecretKeySpec secretKey = getSecretKey(encryptionKey);
+            final SecretKeySpec secretKey = getSecretKey(encryptionKey, "AES");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            decryptedString = new String(cipher.doFinal(Base64.decodeBase64(codeDecrypt)), StandardCharsets.UTF_8).trim();
-        } catch (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e) {
-            System.err.println(e.getMessage());
+            return new String(cipher.doFinal(Base64.decodeBase64(codeDecrypt)), StandardCharsets.UTF_8).trim();
+        } catch (Exception e) {
+            return null;
         }
-        return decryptedString;
     }
 
-    private static Cipher getCipherInstance(String cipherAlgorithm) throws Exception {
+    private static Cipher getCipherInstance(String cipherAlgorithm)
+            throws NoSuchAlgorithmException, NoSuchPaddingException {
         return Cipher.getInstance(cipherAlgorithm);
     }
-    
-    private static SecretKeySpec getSecretKey(String encryptionKey) {
-        return new SecretKeySpec(encryptionKey.getBytes(StandardCharsets.UTF_8), "AES");
+
+    private static SecretKeySpec getSecretKey(String encryptionKey, String algorithm) {
+        return new SecretKeySpec(encryptionKey.getBytes(StandardCharsets.UTF_8), algorithm);
     }
 }

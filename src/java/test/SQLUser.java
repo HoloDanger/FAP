@@ -10,11 +10,6 @@ public class SQLUser {
 
     // Constructor
     public SQLUser(int id, String email, String password, String firstName, String lastName) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     // Getters and setters
