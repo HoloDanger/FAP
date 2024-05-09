@@ -99,8 +99,4 @@ public class LoginServlet extends HttpServlet {
 
         response.sendRedirect(redirectPage);
     }
-    
-    private boolean isEncypted(String password) {
-        return true;
-    }
 }
