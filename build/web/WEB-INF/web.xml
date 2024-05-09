@@ -34,7 +34,7 @@
         </init-param>
         <init-param>
             <param-name>jdbcPassword</param-name>
-            <param-value>retselnhoj</param-value>
+            <param-value>depends</param-value>
         </init-param>
         <init-param>
             <param-name>jdbcDriver</param-name>
