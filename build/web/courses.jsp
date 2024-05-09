@@ -210,7 +210,7 @@
                 <button class="nav" href="#">Careers</button>
                 <button class="nav" href="#">About</button>
                 <button class="nav" href="#">Contact Us</button>
-                <button class="login" href="#"><a class="login" href="login.jsp">Account</a></button>
+                <button class="login" href="#"><a class="login" href="instructor_myaccount.jsp">Account</a></button>
             </nav>
         </header>
 

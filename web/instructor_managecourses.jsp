@@ -326,10 +326,18 @@
             <div class="sidebar">
                 <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
                 <div class="username">Juan Dela Cruz</div>
-                <button class="myaccount">My Account</button>
-                <button class="myschedule">My Schedule</button>
-                <button class="managecourses">Manage Courses</button>
-                <button class="manageaccounts">Manage Accounts</button>
+                <form action="instructor_myaccount.jsp" method="GET">
+                    <button type="submit" class="myaccount">My Account</button>
+                </form>
+                <form action="instructor_myschedule.jsp" method="GET">
+                    <button class="myschedule">My Schedule</button>
+                </form>
+                <form action="instructor_managecourses.jsp" method="GET">
+                    <button class="managecourses">Manage Courses</button>
+                </form>
+                <form action="instructor_manageaccounts.jsp" method="GET">
+                    <button class="manageaccounts">Manage Accounts</button>
+                </form>
             </div>
             <div class="container">
                 <div class="add-container">

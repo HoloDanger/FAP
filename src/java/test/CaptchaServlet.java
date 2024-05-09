@@ -1,6 +1,5 @@
 package test;
 
-
 import java.util.*;
 import java.io.*;
 import java.awt.*;
@@ -15,16 +14,19 @@ public class CaptchaServlet extends HttpServlet {
 
     private static final String CHRS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final Random rand = new Random();
+    private static final int CAPTCHA_WIDTH_MULTIPLIER = 30;
+    private static final int CAPTCHA_HEIGHT = 40;
+    private static final int MAX_NOISE = 150;
+    private final int MAX_COLOR_VALUE = 255;
 
     // Generates a CAPTCHA of given length
     static String generateCaptcha(int n) {
-        String captcha = "";
+        StringBuilder captchaBuilder = new StringBuilder();
         while (n-- > 0) {
             int index = rand.nextInt(CHRS.length());
-            captcha += CHRS.charAt(index);
+            captchaBuilder.append(CHRS.charAt(index));
         }
-
-        return captcha;
+        return captchaBuilder.toString();
     }
 
     @Override
@@ -32,21 +34,22 @@ public class CaptchaServlet extends HttpServlet {
             throws ServletException, IOException {
         // Generate a random CAPTCHA
         String length = request.getServletContext().getInitParameter("CAPTCHA_LENGTH");
-        System.out.println("CAPTCHA Length from context: " + length); // Debugging line
-        int captchaLength = Integer.parseInt(length);
-        String captcha = generateCaptcha(captchaLength);
+        // System.out.println("CAPTCHA Length from context: " + length); // Debugging
+        // line
+        int captchaLength = 0;
+        try {
+            captchaLength = Integer.parseInt(length);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid CAPTCHA length.");
+            return;
+        }
 
+        String captcha = generateCaptcha(captchaLength);
         // Store the captcha in the session
         HttpSession session = request.getSession();
-
         session.setAttribute("captcha", captcha);
 
         // Generate CAPTCHA image
-        final int CAPTCHA_WIDTH_MULTIPLIER = 30;
-        final int CAPTCHA_HEIGHT = 40;
-        final int MAX_NOISE = 150;
-        final int MAX_COLOR_VALUE = 255;
-
         int width = CAPTCHA_WIDTH_MULTIPLIER * captcha.length() + 20;
         int height = CAPTCHA_HEIGHT;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -69,15 +72,16 @@ public class CaptchaServlet extends HttpServlet {
         // Draw the CAPTCHA string with some distortion and bigger font
         for (int i = 0; i < captcha.length(); i++) {
             int xOffset = i * CAPTCHA_WIDTH_MULTIPLIER + 10; // Increase the horizontal spacing for larger text
-            if (xOffset + CAPTCHA_WIDTH_MULTIPLIER > width) {
-                width = xOffset + CAPTCHA_WIDTH_MULTIPLIER; // Ensure the image width accommodates the CAPTCHA
-                image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-                graphics = image.createGraphics();
+            // if (xOffset + CAPTCHA_WIDTH_MULTIPLIER > width) {
+            // width = xOffset + CAPTCHA_WIDTH_MULTIPLIER; // Ensure the image width
+            // accommodates the CAPTCHA
+            // image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            // graphics = image.createGraphics();
 
-                graphics.setColor(Color.WHITE);
+            // graphics.setColor(Color.WHITE);
 
-                graphics.fillRect(0, 0, width, height);
-            }
+            // graphics.fillRect(0, 0, width, height);
+            // }
             int yOffset = 35 + random.nextInt(10) - 5; // Add some vertical distortion
             // Set a darker color for the text
             int darkGray1 = random.nextInt(200);
@@ -91,19 +95,16 @@ public class CaptchaServlet extends HttpServlet {
 
         // Draw random lines
         for (int i = 0; i < 4; i++) {
-            graphics.setColor(
-                    new Color(random.nextInt(MAX_COLOR_VALUE), random.nextInt(MAX_COLOR_VALUE),
-                            random.nextInt(MAX_COLOR_VALUE)));
+            graphics.setColor(new Color(random.nextInt(MAX_COLOR_VALUE), random.nextInt(MAX_COLOR_VALUE),
+                    random.nextInt(MAX_COLOR_VALUE)));
             graphics.drawLine(random.nextInt(width), random.nextInt(height),
                     random.nextInt(width), random.nextInt(height));
         }
 
         // Finish up
         graphics.dispose();
-
         // Set response content type to image
         response.setContentType("image/jpeg");
-
         ImageIO.write(image, "jpeg", response.getOutputStream());
     }
 }
