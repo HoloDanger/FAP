@@ -28,23 +28,20 @@ public class LoginServlet extends HttpServlet {
             String url = getServletConfig().getInitParameter("DB_url");
             String DBusername = getServletConfig().getInitParameter("DB_username");
             String DBpassword = getServletConfig().getInitParameter("DB_password");
-            try (Connection con = DriverManager.getConnection(url, DBusername, DBpassword)) {
-                String query = "SELECT * FROM USER_INFO ORDER BY username";
 
-                try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        String username = rs.getString("USERNAME").trim();
-                        String encryptedPassword = rs.getString("PASSWORD").trim();
-                        String role = rs.getString("ROLE").trim();
-                        String decryptedPassword = Security.decrypt(encryptedPassword, config.getServletContext());
-                        users.add(new User(username, decryptedPassword, role));
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            try (Connection con = DriverManager.getConnection(url, DBusername, DBpassword); PreparedStatement ps = con.prepareStatement("SELECT * FROM USER_INFO ORDER BY username"); ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String username = rs.getString("USERNAME").trim();
+                    String encryptedPassword = rs.getString("PASSWORD").trim();
+                    String role = rs.getString("ROLE").trim();
+                    String decryptedPassword = Security.decrypt(encryptedPassword, config.getServletContext());
+                    users.add(new User(username, decryptedPassword, role));
                 }
+            } catch (Exception ex) {
+                throw new ServletException("Error decrypting password", ex);
             }
-        } catch (SQLException | ClassNotFoundException sqle) {
-            throw new ServletException("Database connection problem", sqle);
+        } catch (ClassNotFoundException e) {
+            throw new ServletException("Initialization failed due to database issues", e);
         }
     }
 
