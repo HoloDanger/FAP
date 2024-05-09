@@ -190,7 +190,7 @@
 
             .add-container {
                 width: 400px;
-                height:640px;
+                height:740px;
                 margin: 100px auto;
                 background-color: #fff;
                 border-radius: 5px;
@@ -267,7 +267,7 @@
 
 
             .add-form input[type="submit"]		{
-                margin-top: 30px;
+                margin-top: 20px;
             }
 
             .delete-form input[type="submit"]:hover,
@@ -305,22 +305,11 @@
         </style>
     </head>
     <body>
-        <% response.setHeader("Cache-Control", "no-cache, no-store,must - revalidate"); // HTTP 1.1. 
-            response.setDateHeader("Expires", 0); // Proxies. 
-            String username = null;
-            String role = null; // Check if the username is null before getting the username and role
-            if (session == null
-                    || session.getAttribute("username") == null) {
-                response.sendRedirect("error_session.jsp");
-            } else {
-                username = (String) session.getAttribute("username");
-                role = (String) session.getAttribute("role");
-        }%>
 
         <header>
             <nav>
                 <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="index.jsp"></a></button>
-                <a href="courses.jsp" class="nav"><button>Courses</button></a>
+                <button class="nav" href="#">Courses</button>
                 <button class="nav" href="#">News</button>
                 <button class="nav" href="#">Careers</button>
                 <button class="nav" href="#">About</button>
@@ -336,19 +325,11 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
-                <div class="username"><%= username%></div>
-                <form action="instructor_myaccount.jsp" method="GET">
-                    <button type="submit" class="myaccount">My Account</button>
-                </form>
-                <form action="instructor_myschedule.jsp" method="GET">
-                    <button class="myschedule">My Schedule</button>
-                </form>
-                <form action="instructor_managecourses.jsp" method="GET">
-                    <button class="managecourses">Manage Courses</button>
-                </form>
-                <form action="instructor_manageaccounts.jsp" method="GET">
-                    <button class="manageaccounts">Manage Accounts</button>
-                </form>
+                <div class="username">Juan Dela Cruz</div>
+                <button class="myaccount">My Account</button>
+                <button class="myschedule">My Schedule</button>
+                <button class="managecourses">Manage Courses</button>
+                <button class="manageaccounts">Manage Accounts</button>
             </div>
             <div class="container">
                 <div class="add-container">
@@ -359,6 +340,7 @@
                         <p>Start Date:</p><input type="text" placeholder="Start Date" name="coursestartdate" required>
                         <p>End Date:</p><input type="text" placeholder="End Date" name="courseenddate" required>
                         <p>Time:</p><input type="text" placeholder="Time" name="coursetime" required>
+                        <p>Banner:</p><input type="text" placeholder="Banner Link" name="coursebanner" required>
                         <input type="submit" value="Add">
                     </form>
                 </div>
@@ -373,7 +355,7 @@
                     </div>
                     <div class="delete-container">
                         <h2>Delete a Course:</h2>
-                        <form class="delete-form" action="LoginServlet" method="POST">
+                        <form class="delete-form" action="login.jsp" method="POST">
                             <p>Name:</p><input type="text" placeholder="Name" name="coursename" required>
                             <input type="submit" value="Delete">
                         </form>
@@ -383,7 +365,7 @@
         </div>
 
         <footer>
-            <div class="footer-text">© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
+            <div class="footer-text">Â© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
         </footer>
 
     </body>
