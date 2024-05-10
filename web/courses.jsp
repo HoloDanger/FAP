@@ -210,7 +210,12 @@
                 <button class="nav" href="#">Careers</button>
                 <button class="nav" href="#">About</button>
                 <button class="nav" href="#">Contact Us</button>
-                <button class="login" href="#"><a class="login" href="instructor_myaccount.jsp">Account</a></button>
+                <form class="login" action="LoginServlet" method="POST">
+                    <button type="submit" name="account">Account</button>
+                </form>
+
+
+
             </nav>
         </header>
 

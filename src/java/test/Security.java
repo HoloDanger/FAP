@@ -18,7 +18,6 @@ public class Security {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e) {
-            System.err.println("Encryption error:" + e.getMessage());
             return null;
         }
     }
@@ -32,7 +31,6 @@ public class Security {
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return new String(cipher.doFinal(Base64.decodeBase64(codeDecrypt)), StandardCharsets.UTF_8).trim();
         } catch (Exception e) {
-            System.err.println("Decryption error:" + e.getMessage());
             return null;
         }
     }

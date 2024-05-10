@@ -307,74 +307,75 @@
     <body>
 
         <header>
-            <nav>
-                <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="index.jsp"></a></button>
-                <button class="nav" href="#">Courses</button>
-                <button class="nav" href="#">News</button>
-                <button class="nav" href="#">Careers</button>
-                <button class="nav" href="#">About</button>
-                <button class="nav" href="#">Contact Us</button>
-                <button class="login" href="#"><a class="login" href="login.jsp">Logout</a></button>
-            </nav>
-        </header>
+    <nav>
+        <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="index.jsp"></a></button>
+        <button class="nav" href="#">Courses</button>
+        <button class="nav" href="#">News</button>
+        <button class="nav" href="#">Careers</button>
+        <button class="nav" href="#">About</button>
+        <button class="nav" href="#">Contact Us</button>
+        <button class="login" href="#"><a class="login" href="login.jsp">Logout</a></button>
+    </nav>
+</header>
 
-        <div class="header-text">IT and Project Management Training Philippines - ActiveLearning, Inc.</div>
+<div class="header-text">IT and Project Management Training Philippines - ActiveLearning, Inc.</div>
 
-        <div class="body">
+<div class="body">
 
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
-                <div class="username">Juan Dela Cruz</div>
-                <form action="instructor_myaccount.jsp" method="GET">
-                    <button type="submit" class="myaccount">My Account</button>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
+        <div class="username">Juan Dela Cruz</div>
+        <form action="instructor_myaccount.jsp" method="GET">
+            <button type="submit" class="myaccount">My Account</button>
+        </form>
+        <form action="instructor_myschedule.jsp" method="GET">
+            <button class="myschedule">My Schedule</button>
+        </form>
+        <form action="instructor_managecourses.jsp" method="GET">
+            <button class="managecourses">Manage Courses</button>
+        </form>
+        <form action="instructor_manageaccounts.jsp" method="GET">
+            <button class="manageaccounts">Manage Accounts</button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="add-container">
+            <h2>Add a Course:</h2>
+            <!-- Modified form: Added action attribute to submit form data to the CourseServlet -->
+            <form class="add-form" action="CourseServlet" method="POST">
+                <p>Name:</p><input type="text" placeholder="Name" name="coursename" required>
+                <p>Instructor:</p><input type="text" placeholder="Instructor" name="courseinstructor" required>
+                <p>Start Date:</p><input type="date" placeholder="Start Date" name="coursestartdate" required>
+                <p>End Date:</p><input type="date" placeholder="End Date" name="courseenddate" required>
+                <p>Time:</p><input type="text" placeholder="Time" name="coursetime" required>
+                <p>Banner:</p><input type="text" placeholder="Banner Link" name="coursebanner" required>
+                <input type="submit" value="Add">
+            </form>
+        </div>
+        <div>
+            <div class="print-container">
+                <h2>Print a Course:</h2>
+                <form class="print-form" action="CourseServlet" method="POST">
+                    <p>Name:</p><input type="text" placeholder="Name" name="coursename" required>
+                    <input type="submit" value="Print">
                 </form>
-                <form action="instructor_myschedule.jsp" method="GET">
-                    <button class="myschedule">My Schedule</button>
-                </form>
-                <form action="instructor_managecourses.jsp" method="GET">
-                    <button class="managecourses">Manage Courses</button>
-                </form>
-                <form action="instructor_manageaccounts.jsp" method="GET">
-                    <button class="manageaccounts">Manage Accounts</button>
-                </form>
+                <input type="submit" value="Print All">
             </div>
-            <div class="container">
-                <div class="add-container">
-                    <h2>Add a Course:</h2>
-                    <form class="add-form" action="login.jsp" method="POST">
-                        <p>Name:</p><input type="text" placeholder="Name" name="coursename" required>
-                        <p>Instructor:</p><input type="text" placeholder="Instructor" name="courseinstructor" required>
-                        <p>Start Date:</p><input type="text" placeholder="Start Date" name="coursestartdate" required>
-                        <p>End Date:</p><input type="text" placeholder="End Date" name="courseenddate" required>
-                        <p>Time:</p><input type="text" placeholder="Time" name="coursetime" required>
-                        <p>Banner:</p><input type="text" placeholder="Banner Link" name="coursebanner" required>
-                        <input type="submit" value="Add">
-                    </form>
-                </div>
-                <div>
-                    <div class="print-container">
-                        <h2>Print a Course:</h2>
-                        <form class="print-form" action="login.jsp" method="POST">
-                            <p>Name:</p><input type="text" placeholder="Name" name="coursename" required>
-                            <input type="submit" value="Print">
-                        </form>
-                        <input type="submit" value="Print All">
-                    </div>
-                    <div class="delete-container">
-                        <h2>Delete a Course:</h2>
-                        <form class="delete-form" action="login.jsp" method="POST">
-                            <p>Name:</p><input type="text" placeholder="Name" name="coursename" required>
-                            <input type="submit" value="Delete">
-                        </form>
-                    </div>
-                </div>
+            <div class="delete-container">
+                <h2>Delete a Course:</h2>
+                <form class="delete-form" action="CourseServlet" method="POST">
+                    <p>Name:</p><input type="text" placeholder="Name" name="coursename" required>
+                    <input type="submit" value="Delete">
+                </form>
             </div>
         </div>
+    </div>
+</div>
 
-        <footer>
-            <div class="footer-text">Â© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
-        </footer>
+<footer>
+    <div class="footer-text">© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
+</footer>
 
-    </body>
+</body>
 </html>

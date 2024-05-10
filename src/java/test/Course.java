@@ -3,21 +3,13 @@ package test;
 import java.util.Date;
 
 public class Course {
-
-    private int id;
+    
     private String courseName;
     private String instructor;
     private Date startDate;
     private Date endDate;
     private String courseTime;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String banner;
 
     public String getCourseName() {
         return courseName;
@@ -59,13 +51,21 @@ public class Course {
         this.courseTime = courseTime;
     }
 
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
+
     // Constructor
-    public Course(int id, String courseName, String instructor, Date startDate, Date endDate, String courseTime) {
-        this.id = id;
+    public Course(String courseName, String instructor, Date startDate, Date endDate, String courseTime, String banner) {
         this.courseName = courseName;
         this.instructor = instructor;
         this.startDate = startDate;
         this.endDate = endDate;
         this.courseTime = courseTime;
+        this.banner = banner;
     }
 }

@@ -26,15 +26,15 @@
         <servlet-class>test.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserServlet</servlet-name>
-        <servlet-class>test.UserServlet</servlet-class>
+        <servlet-name>CourseServlet</servlet-name>
+        <servlet-class>test.CourseServlet</servlet-class>
         <init-param>
             <param-name>jdbcUsername</param-name>
             <param-value>root</param-value>
         </init-param>
         <init-param>
             <param-name>jdbcPassword</param-name>
-            <param-value>depends</param-value>
+            <param-value>retselnhoj</param-value>
         </init-param>
         <init-param>
             <param-name>jdbcDriver</param-name>
@@ -42,7 +42,7 @@
         </init-param>
         <init-param>
             <param-name>jdbcURL</param-name>
-            <param-value>jdbc:mysql://localhost:3310/ActiveLearningDB?zeroDateTimeBehavior=CONVERT_TO_NULL</param-value>
+            <param-value>jdbc:mysql://localhost:3310/ActiveLearningDB?useSSL=false</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -52,6 +52,10 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseServlet</servlet-name>
+        <url-pattern>/CourseServlet</url-pattern>
     </servlet-mapping>
     <!-- Listener -->
     <listener>
