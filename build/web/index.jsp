@@ -110,11 +110,11 @@
         <header>
             <nav>
                 <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="index.jsp"></a></button>
-                <button class="nav" href="#">Courses</button>
-                <button class="nav" href="#">News</button>
-                <button class="nav" href="#">Careers</button>
-                <button class="nav" href="#">About</button>
-                <button class="nav" href="#">Contact Us</button>
+                <a href="courses.jsp" class="nav"><button>Courses</button></a>
+                <a href="https://activelearning.ph/news/" class="nav"><button class="nav" href="#">News</button></a>
+                <a href="https://activelearning.ph/careers/" class="nav"><button class="nav" href="#">Careers</button></a>
+                <a href="https://activelearning.ph/about/" class="nav"><button class="nav" href="#">About</button></a>
+                <a href="https://activelearning.ph/contact/" class="nav"><button class="nav" href="#">Contact Us</button></a>
                 <button class="login" href="#"><a class="login" href="login.jsp">Login</a></button>
             </nav>
         </header>

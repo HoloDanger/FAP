@@ -120,6 +120,10 @@
                 margin-bottom: 20px;
                 margin-top: 30px;
                 margin-left: 50px;
+                min-width: 100px;
+                min-height: 100px;
+                max-width: 100px;
+                max-height: 100px;
             }
 
             .username {
@@ -231,7 +235,8 @@
             .print-form input[type="text"],
             .print-form input[type="password"],
             .add-form input[type="text"],
-            .add-form input[type="password"] {
+            .add-form input[type="password"],
+            .add-form input[type="date"]{
                 width: 338px;
                 padding: 10px;
                 margin: 10px 0;
@@ -305,27 +310,55 @@
         </style>
     </head>
     <body>
+        <%
+            response.setHeader("Cache-Control", "no-cache, no-store,must - revalidate"); // HTTP 1.1. 
+            response.setDateHeader("Expires", 0); // Proxies. 
+            String username = null;
+            String firstname = null;
+            String lastname = null;
+            String email = null;
+            String password = null;
+            String link = null;
+            String role = null;
+            if (session == null || session.getAttribute("username") == null) {
+                response.sendRedirect("error_session.jsp");
+            } else {
+                username = (String) session.getAttribute("username");
+                firstname = (String) session.getAttribute("firstname");
+                lastname = (String) session.getAttribute("lastname");
+                email = (String) session.getAttribute("email");
+                password = (String) session.getAttribute("password");
+                link = (String) session.getAttribute("link");
+                role = (String) session.getAttribute("role");
+                if (link == null) {
+                    link = "https://via.placeholder.com/100";
+                }
+                if (role != null && role.equals("Student")) {
+                    response.sendRedirect("student_myaccount.jsp");
+                }
+            }
+        %>
 
         <header>
             <nav>
                 <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="index.jsp"></a></button>
-                <button class="nav" href="#">Courses</button>
-                <button class="nav" href="#">News</button>
-                <button class="nav" href="#">Careers</button>
-                <button class="nav" href="#">About</button>
-                <button class="nav" href="#">Contact Us</button>
-                <button class="login" href="#"><a class="login" href="login.jsp">Logout</a></button>
+                <a href="courses.jsp" class="nav"><button>Courses</button></a>
+                <a href="https://activelearning.ph/news/" class="nav"><button class="nav" href="#">News</button></a>
+                <a href="https://activelearning.ph/careers/" class="nav"><button class="nav" href="#">Careers</button></a>
+                <a href="https://activelearning.ph/about/" class="nav"><button class="nav" href="#">About</button></a>
+                <a href="https://activelearning.ph/contact/" class="nav"><button class="nav" href="#">Contact Us</button></a>
+                <form action="LogoutServlet" method="GET" style="display: inline;"><button class="login" type="submit">Logout</button></form>
             </nav>
         </header>
 
-        <div class="header-text">IT and Project Management Training Philippines - ActiveLearning, Inc.</div>
+        <div class="header-text">${applicationScope.header}</div>
 
         <div class="body">
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
-                <div class="username">Juan Dela Cruz</div>
+                <img src="<%= link%>" alt="Profile Picture" class="profile-pic">
+                <div class="username"><%= firstname%> <%= lastname%></div>  
                 <form action="instructor_myaccount.jsp" method="GET">
                     <button type="submit" class="myaccount">My Account</button>
                 </form>
@@ -375,7 +408,7 @@
         </div>
 
         <footer>
-            <div class="footer-text">© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
+            <div class="footer-text">${applicationScope.footer}</div>
         </footer>
 
     </body>

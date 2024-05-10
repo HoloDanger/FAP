@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
         // Validate CAPTCHA
         if (correctCaptcha != null && !correctCaptcha.equalsIgnoreCase(enteredCaptcha)) {
             // CAPTCHA mismatch, redirect with error
-            response.sendRedirect("index.jsp?error=captcha");
+            response.sendRedirect("login.jsp?error=captcha");
             return;
         }
 

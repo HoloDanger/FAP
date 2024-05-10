@@ -120,6 +120,10 @@
                 margin-bottom: 20px;
                 margin-top: 30px;
                 margin-left: 50px;
+                min-width: 100px;
+                min-height: 100px;
+                max-width: 100px;
+                max-height: 100px;
             }
 
             .username {
@@ -309,15 +313,15 @@
             <nav>
                 <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="index.jsp"></a></button>
                 <a href="courses.jsp" class="nav"><button>Courses</button></a>
-                <button class="nav" href="#">News</button>
-                <button class="nav" href="#">Careers</button>
-                <button class="nav" href="#">About</button>
-                <button class="nav" href="#">Contact Us</button>
-                <button class="login" href="#"><a class="login" href="login.jsp">Logout</a></button>
+                <a href="https://activelearning.ph/news/" class="nav"><button class="nav" href="#">News</button></a>
+                <a href="https://activelearning.ph/careers/" class="nav"><button class="nav" href="#">Careers</button></a>
+                <a href="https://activelearning.ph/about/" class="nav"><button class="nav" href="#">About</button></a>
+                <a href="https://activelearning.ph/contact/" class="nav"><button class="nav" href="#">Contact Us</button></a>
+                <form action="LogoutServlet" method="GET" style="display: inline;"><button class="login" type="submit">Logout</button></form>
             </nav>
         </header>
 
-        <div class="header-text">IT and Project Management Training Philippines - ActiveLearning, Inc.</div>
+        <div class="header-text">${applicationScope.header}</div>
 
         <div class="body">
 
@@ -352,7 +356,7 @@
         </div>
 
         <footer>
-            <div class="footer-text">© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
+            <div class="footer-text">${applicationScope.footer}</div>
         </footer>
 
     </body>
