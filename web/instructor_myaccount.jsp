@@ -1,3 +1,5 @@
+<%@ page import="test.SQLUser" %>
+<%@ page import="test.UserDetailServlet" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -276,17 +278,36 @@
         </style>
     </head>
     <body>
-        <% response.setHeader("Cache-Control", "no-cache, no-store,must - revalidate"); // HTTP 1.1. 
+        <%
+            response.setHeader("Cache-Control", "no-cache, no-store,must - revalidate"); // HTTP 1.1. 
             response.setDateHeader("Expires", 0); // Proxies. 
             String username = null;
-            String role = null; // Check if the username is null before getting the username and role
-            if (session == null
-                    || session.getAttribute("username") == null) {
+            String firstname = null;
+            String lastname = null;
+            String email = null;
+            String password = null;
+            String link = null;
+            String role = null;
+            if (session == null || session.getAttribute("username") == null) {
                 response.sendRedirect("error_session.jsp");
             } else {
                 username = (String) session.getAttribute("username");
+                firstname = (String) session.getAttribute("firstname");
+                lastname = (String) session.getAttribute("lastname");
+                email = (String) session.getAttribute("email");
+                password = (String) session.getAttribute("password");
+                link = (String) session.getAttribute("link");
                 role = (String) session.getAttribute("role");
-        }%>
+
+                if (link == null) {
+                    link = "https://via.placeholder.com/100";
+                }
+
+                if (role != null && role.equals("Student")) {
+                    response.sendRedirect("student_myaccount.jsp");
+                }
+            }
+        %>
 
         <header>
             <nav>
@@ -300,13 +321,13 @@
             </nav>
         </header>
 
-        <div class="header-text">IT and Project Management Training Philippines - ActiveLearning, Inc.</div>
+        <div class="header-text">${applicationScope.header}</div>
 
         <div class="body">
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
+                <img src=<%= link%> alt="Profile Picture" class="profile-pic">
                 <div class="username"><%= username%></div>
                 <form action="instructor_myaccount.jsp" method="GET">
                     <button type="submit" class="myaccount">My Account</button>
@@ -325,15 +346,15 @@
             <div class="container">
                 <div class="details-container">
                     <h2>Account Details</h2>
-                    <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
-                    <form class="details-form" action="login.jsp" method="POST">
-                        <p>First Name:</p><input type="text" placeholder="First Name" name="firstname" value="Juan" required>
-                        <p>Last Name:</p><input type="text" placeholder="Last Name" name="lastname" value="Dela Cruz" required>
-                        <p>Username:</p><input type="text" placeholder="Username" name="username" value="Juan123" required>
-                        <p>Email:</p><input type="text" placeholder="Email" name="email" value="JDC@gmail.com" required>
+                    <img src="<%= link%>" alt="Profile Picture" class="profile-pic">
+                    <form class="details-form" action="UserDetailServlet" method="POST">
+                        <p>First Name:</p><input type="text" placeholder="First Name" name="firstname" value="<%= firstname%>" required>
+                        <p>Last Name:</p><input type="text" placeholder="Last Name" name="lastname" value="<%= lastname%>" required>
+                        <p>Username:</p><input type="text" placeholder="Username" name="username" value="<%= username%>" required>
+                        <p>Email:</p><input type="text" placeholder="Email" name="email" value="<%= email%>" required>
                         <p>Password:</p><input type="password" placeholder="Password" name="password" required>
-                        <p>Role:</p><input type="text" placeholder="Role" name="role" value="Instructor" readonly required>
-                        <p>Profile Picture Link:</p><input type="text" placeholder="Link" name="link" required>
+                        <p>Role:</p><input type="text" placeholder="Role" name="role" value="<%= role%>" readonly required>
+                        <p>Profile Picture Link:</p><input type="text" placeholder="Link" value="<%= link%>" name="link">
                         <input type="submit" value="Save">
                     </form>
                 </div>
@@ -341,7 +362,7 @@
         </div>
 
         <footer>
-            <div class="footer-text">© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
+            <div class="footer-text">${applicationScope.footer}</div>
         </footer>
 
     </body>

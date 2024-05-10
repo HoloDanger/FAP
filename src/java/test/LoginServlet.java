@@ -1,6 +1,5 @@
 package test;
 
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ public class LoginServlet extends HttpServlet {
             String driver = getServletConfig().getInitParameter("DB_driver");
             Class.forName(driver);
 
+            Class.forName(getServletContext().getInitParameter("dbDriver"));
             String url = getServletConfig().getInitParameter("DB_url");
             String DBusername = getServletConfig().getInitParameter("DB_username");
             String DBpassword = getServletConfig().getInitParameter("DB_password");
@@ -71,33 +71,49 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        // Validate username and password
-        boolean checkUsername = false;
-        boolean checkPassword = false;
-        String role = ""; // Variable to store user role
-
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                checkUsername = true;
-                if (user.getPassword().equals(password)) {
-                    checkPassword = true;
-                    role = user.getRole(); // Store user role
-                    HttpSession userSession = request.getSession();
-                    userSession.setAttribute("username", user.getUsername());
-                    userSession.setAttribute("role", role);
-                    break;
-                }
+        // Authenticate the user using the Derby database
+        User user = null;
+        for (User u : users) {
+            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                user = u;
+                break;
             }
         }
 
         // Redirect based on validation result and user role
-        if (checkUsername && checkPassword) {
-            if (role.equalsIgnoreCase("admin")) {
+        if (user != null) {
+            // Store user details in the session
+            session.setAttribute("username", user.getUsername());
+
+            // Map the role from Derby database to MySQL database
+            String role = user.getRole();
+            if (role.equals("Admin")) {
+                role = "Instructor";
+            } else if (role.equals("Guest")) {
+                role = "Student";
+            }
+            session.setAttribute("role", role);
+
+            // Retrieve user details from the MySQL database
+            SQLUser sqlUser = getUserDetails(username);
+            if (sqlUser != null) {
+                System.out.println("First Name (Servlet): " + sqlUser.getFirstName());
+                System.out.println("Last Name (Servlet): " + sqlUser.getLastName());
+                session.setAttribute("firstname", sqlUser.getFirstName());
+                session.setAttribute("lastname", sqlUser.getLastName());
+                session.setAttribute("email", sqlUser.getEmail());
+                session.setAttribute("password", sqlUser.getPassword());
+                session.setAttribute("link", sqlUser.getLink());
+            }
+
+            // Redirect based on user role
+            if (role.equals("Instructor")) {
                 response.sendRedirect("instructor_myaccount.jsp");
-            } else {
+            } else if (role.equals("Student")) {
                 response.sendRedirect("student_myaccount.jsp");
             }
         } else {
+            // Authentication failed, redirect with error
             response.sendRedirect("error_3.jsp");
         }
     }
@@ -112,5 +128,41 @@ public class LoginServlet extends HttpServlet {
         } else {
             response.sendRedirect("student_myaccount.jsp");
         }
+    }
+
+    private SQLUser getUserDetails(String username) {
+        SQLUser user = null;
+        String url = getServletContext().getInitParameter("dbUrl");
+        String dbUser = getServletContext().getInitParameter("dbUser");
+        String dbPassword = getServletContext().getInitParameter("dbPassword");
+        String query = "SELECT * FROM users WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword); PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, username);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String firstname = rs.getString("firstname");
+                    String lastname = rs.getString("lastname");
+                    String email = rs.getString("email");
+                    String password = rs.getString("password");
+                    String role = rs.getString("role");
+                    String link = rs.getString("link");
+
+                    System.out.println("Guest User Details:");
+                    System.out.println("First Name: " + firstname);
+                    System.out.println("Last Name: " + lastname);
+                    System.out.println("Email: " + email);
+                    System.out.println("Password: " + password);
+                    System.out.println("Role: " + role);
+                    System.out.println("Link: " + link);
+
+                    user = new SQLUser(firstname, lastname, username, email, password, role, link);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

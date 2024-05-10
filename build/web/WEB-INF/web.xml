@@ -65,6 +65,10 @@
             <param-value>jdbc:mysql://localhost:3310/ActiveLearningDB?useSSL=false</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <servlet-class>test.UserDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -81,11 +85,31 @@
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserDetailServlet</servlet-name>
+        <url-pattern>/UserDetailServlet</url-pattern>
+    </servlet-mapping>
     <!-- Listener -->
     <listener>
         <listener-class>test.ContextListener</listener-class>
     </listener>
     <!-- Context Parameters -->
+    <context-param>
+        <param-name>dbUrl</param-name>
+        <param-value>jdbc:mysql://localhost:3310/ActiveLearningDB?useSSL=false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbUser</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbPassword</param-name>
+        <param-value>retselnhoj</param-value>
+    </context-param>
+     <context-param>
+        <param-name>dbDriver</param-name>
+        <param-value>com.mysql.cj.jdbc.Driver</param-value>
+    </context-param>
     <context-param>
         <param-name>CIPHER_ALGORITHM</param-name>
         <param-value>AES/ECB/PKCS5Padding</param-value>
