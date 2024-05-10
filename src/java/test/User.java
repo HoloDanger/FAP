@@ -14,11 +14,11 @@ public class User {
 
     // Getters and setters
 
-    public String getUsername() {
+    public String getEmail() {
         return email;
     }
 
-    public void setUsername(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -37,5 +37,4 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-    
 }

@@ -6,13 +6,15 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserServlet extends HttpServlet {
+@WebServlet("/courses")
+public class CourseServlet extends HttpServlet {
 
-    private UserDAO userDAO;
+    private CourseDAO courseDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -25,7 +27,7 @@ public class UserServlet extends HttpServlet {
             String DBpassword = getServletConfig().getInitParameter("jdbcPassword");
 
             // Instantiate UserDAO with database parameters
-            userDAO = new UserDAO(url, DBusername, DBpassword);
+            courseDAO = new CourseDAO(url, DBusername, DBpassword);
         } catch (ClassNotFoundException e) {
             throw new ServletException("Initialization failed due to database issues", e);
         }
@@ -35,10 +37,10 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            List<SQLUser> users = userDAO.getAllUsers();
-            request.setAttribute("users", users);
+            List<Course> courses = courseDAO.getAllCourses();
+            request.setAttribute("courses", courses);
         } catch (SQLException e) {
-            throw new ServletException("Database error while retrieving users", e);
+            throw new ServletException("Database error while retrieving courses", e);
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("courses.jsp");
         dispatcher.forward(request, response);

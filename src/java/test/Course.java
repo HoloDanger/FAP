@@ -10,7 +10,6 @@ public class Course {
     private Date startDate;
     private Date endDate;
     private String courseTime;
-    
 
     public int getId() {
         return id;
@@ -56,11 +55,17 @@ public class Course {
         return courseTime;
     }
 
-    // Constructor
     public void setCourseTime(String courseTime) {
         this.courseTime = courseTime;
     }
 
+    // Constructor
     public Course(int id, String courseName, String instructor, Date startDate, Date endDate, String courseTime) {
+        this.id = id;
+        this.courseName = courseName;
+        this.instructor = instructor;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.courseTime = courseTime;
     }
 }

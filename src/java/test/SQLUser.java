@@ -8,10 +8,6 @@ public class SQLUser {
     private String firstName;
     private String lastName;
 
-    // Constructor
-    public SQLUser(int id, String email, String password, String firstName, String lastName) {
-    }
-
     // Getters and setters
     public int getID() {
         return id;
@@ -50,6 +46,14 @@ public class SQLUser {
     }
 
     public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public SQLUser(int id, String email, String password, String firstName, String lastName) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
         this.lastName = lastName;
     }
 }

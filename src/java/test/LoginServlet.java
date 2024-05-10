@@ -1,6 +1,5 @@
 package test;
 
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,7 +28,9 @@ public class LoginServlet extends HttpServlet {
             String DBusername = getServletConfig().getInitParameter("DB_username");
             String DBpassword = getServletConfig().getInitParameter("DB_password");
 
-            try (Connection con = DriverManager.getConnection(url, DBusername, DBpassword); PreparedStatement ps = con.prepareStatement("SELECT * FROM USER_INFO ORDER BY username"); ResultSet rs = ps.executeQuery()) {
+            try (Connection con = DriverManager.getConnection(url, DBusername, DBpassword);
+                    PreparedStatement ps = con.prepareStatement("SELECT * FROM USER_INFO ORDER BY username");
+                    ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String username = rs.getString("USERNAME").trim();
                     String encryptedPassword = rs.getString("PASSWORD").trim();
@@ -49,21 +50,20 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get user input
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String enteredCaptcha = request.getParameter("captcha");
-
         // Get the correct CAPTCHA value from the session
         HttpSession session = request.getSession();
         String correctCaptcha = (String) session.getAttribute("captcha");
+        session.removeAttribute("captcha"); // Invalidate CAPTCHA
 
-        // Validate CAPTCHA
-        if (correctCaptcha != null && !correctCaptcha.equalsIgnoreCase(enteredCaptcha)) {
+        if (correctCaptcha == null || !correctCaptcha.equalsIgnoreCase(request.getParameter("captcha"))) {
             // CAPTCHA mismatch, redirect with error
-            response.sendRedirect("index.jsp?error=captcha");
+            response.sendRedirect("login.jsp?error=captcha");
             return;
         }
+
+        // Get user input
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
         // Validate username and password
         boolean checkUsername = false;
@@ -72,13 +72,13 @@ public class LoginServlet extends HttpServlet {
         String role = ""; // Variable to store user role
 
         for (User user : users) {
-            if (user.getUsername().equals(username)) {
+            if (user.getEmail().equals(username)) {
                 checkUsername = true;
                 if (user.getPassword().equals(password)) {
                     checkPassword = true;
                     role = user.getRole(); // Store user role
                     HttpSession userSession = request.getSession();
-                    userSession.setAttribute("username", user.getUsername());
+                    userSession.setAttribute("username", user.getEmail());
                     userSession.setAttribute("role", role);
                     break;
                 }
