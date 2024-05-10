@@ -11,9 +11,6 @@ public class CourseDAO {
     private final String jdbcPassword;
 
     public CourseDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) {
-        if (jdbcURL == null || jdbcUsername == null || jdbcPassword == null) {
-            throw new IllegalArgumentException("Database connection parameters cannot be null");
-        }
         this.jdbcURL = jdbcURL;
         this.jdbcUsername = jdbcUsername;
         this.jdbcPassword = jdbcPassword;

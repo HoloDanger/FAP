@@ -353,7 +353,7 @@
             <div class="container">
                 <div class="add-container">
                     <h2>Add an Account:</h2>
-                    <form class="add-form" action="LoginServlet" method="POST">
+                    <form class="add-form" action="UserServlet" method="POST">
                         <p>First Name:</p><input type="text" placeholder="First Name" name="firstname" required>
                         <p>Last Name:</p><input type="text" placeholder="Last Name" name="lastname" required>
                         <p>Username:</p><input type="text" placeholder="Username" name="username" required>
@@ -367,16 +367,17 @@
                 <div>
                     <div class="print-container">
                         <h2>Print Account List:</h2>
-                        <form class="print-form" action="login.jsp" method="POST">
-                            <p>Course Name:</p><input type="text" placeholder="Course Name" name="coursename" required>
+                        <form class="print-form" action="UserServlet" method="POST">
+                            <p>User Name:</p><input type="text" placeholder="User Name" name="username" required>
                             <input type="submit" value="Print">
                         </form>
                         <input type="submit" value="Print All">
                     </div>
                     <div class="delete-container">
                         <h2>Delete an Account:</h2>
-                        <form class="delete-form" action="LoginServlet" method="POST">
-                            <p>Account Username:</p><input type="text" placeholder="Account Username" name="coursename" required>
+                        <form class="delete-form" action="UserServlet" method="POST">
+                            <input type="hidden" name="action" value="delete">
+                            <p>Account Username:</p><input type="text" placeholder="Account Username" name="username" required>
                             <input type="submit" value="Delete">
                         </form>
                     </div>

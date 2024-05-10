@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/johnl/Documents/NetBeansProjects/FAP-main/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/johnl/Documents/NetBeansProjects/FAP-main/src/java/test/CourseServlet.java</file>
-            <file>file:/C:/Users/johnl/Documents/NetBeansProjects/FAP-main/src/java/test/LoginServlet.java</file>
+            <file>file:/C:/Users/johnl/Documents/NetBeansProjects/FAP2/src/java/test/CourseServlet.java</file>
+            <file>file:/C:/Users/johnl/Documents/NetBeansProjects/FAP2/web/instructor_managecourses.jsp</file>
+            <file>file:/C:/Users/johnl/Documents/NetBeansProjects/FAP2/web/instructor_manageaccounts.jsp</file>
+            <file>file:/C:/Users/johnl/Documents/NetBeansProjects/FAP2/src/java/test/UserServlet.java</file>
         </group>
     </open-files>
 </project-private>

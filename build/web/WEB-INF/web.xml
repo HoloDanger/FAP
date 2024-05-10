@@ -45,6 +45,26 @@
             <param-value>jdbc:mysql://localhost:3310/ActiveLearningDB?useSSL=false</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>test.UserServlet</servlet-class>
+        <init-param>
+            <param-name>jdbcUsername</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jdbcPassword</param-name>
+            <param-value>retselnhoj</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jdbcDriver</param-name>
+            <param-value>com.mysql.cj.jdbc.Driver</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jdbcURL</param-name>
+            <param-value>jdbc:mysql://localhost:3310/ActiveLearningDB?useSSL=false</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -56,6 +76,10 @@
     <servlet-mapping>
         <servlet-name>CourseServlet</servlet-name>
         <url-pattern>/CourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
     </servlet-mapping>
     <!-- Listener -->
     <listener>

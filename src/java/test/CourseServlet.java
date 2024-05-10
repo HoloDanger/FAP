@@ -52,7 +52,7 @@ public class CourseServlet extends HttpServlet {
             String action = request.getParameter("action");
             if ("delete".equals(action)) {
                 // Delete course
-                String courseName = request.getParameter("courseName");
+                String courseName = request.getParameter("coursename");
                 courseDAO.deleteCourse(courseName);
                 response.sendRedirect(request.getContextPath() + "/instructor_managecourses.jsp");
             } else {
