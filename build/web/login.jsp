@@ -102,7 +102,7 @@
 
             .login-container {
                 width: 400px;
-                height: 600px;
+                height: 500px;
                 margin: 100px auto;
                 background-color: #fff;
                 border-radius: 5px;
@@ -134,7 +134,7 @@
             .login-form input[type="submit"] {
                 width: 150px;
                 padding: 10px;
-                margin-top: 40px;
+                margin-top: 20px;
                 margin-left: 125px;
                 background-color: #5FBF77;
                 color: #fff;
@@ -151,7 +151,7 @@
             }
 
             .login-form input[name="captcha"] {
-                margin-top: 150px;
+                margin-top: 40px;
             }
 
             .login-form input[name="username"] {
@@ -178,6 +178,16 @@
             .login a {
                 color: #fff;
             }
+
+            #captchaImage {
+                display: block;
+                margin: 0 auto;
+                margin-top: 20px;
+            }
+
+            nav button a {
+                text-decoration: none;
+            }
         </style>
     </head>
     <body>
@@ -185,16 +195,16 @@
         <header>
             <nav>
                 <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"></button>
-                <button class="nav" href="#">Courses</button>
-                <button class="nav" href="#">News</button>
-                <button class="nav" href="#">Careers</button>
-                <button class="nav" href="#">About</button>
-                <button class="nav" href="#">Contact Us</button>
+                <a href="courses.jsp" class="nav"><button>Courses</button></a>
+                <a href="https://activelearning.ph/news/" class="nav"><button class="nav" href="#">News</button></a>
+                <a href="https://activelearning.ph/careers/" class="nav"><button class="nav" href="#">Careers</button></a>
+                <a href="https://activelearning.ph/about/" class="nav"><button class="nav" href="#">About</button></a>
+                <a href="https://activelearning.ph/contact/" class="nav"><button class="nav" href="#">Contact Us</button></a>
                 <button class="login" href="#"><a class="login" href="login.jsp">Login</a></button>
             </nav>
         </header>
 
-        <div class="header-text">IT and Project Management Training Philippines - ActiveLearning, Inc.</div>
+        <div class="header-text">${applicationScope.header}</div>
 
         <div class="body">
             <div class="login-container">
@@ -214,7 +224,7 @@
         </div>
 
         <footer>
-            <!-- Your existing footer content -->
+            <div class="footer-text">${applicationScope.footer}</div>
         </footer>
 
     </body>

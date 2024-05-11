@@ -103,6 +103,10 @@
             .login a {
                 color: #fff;
             }
+            
+            nav button a {
+                text-decoration: none;
+            }
         </style>
     </head>
     <body>

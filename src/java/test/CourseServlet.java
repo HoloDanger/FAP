@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -36,13 +37,16 @@ public class CourseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Get all courses from the database
-            request.setAttribute("courses", courseDAO.getAllCourses());
+            System.out.println("Entering doGet() method");
+            List<Course> courses = courseDAO.getAllCourses();
+            System.out.println("Retrieved courses: " + courses);
+            request.setAttribute("courses", courses);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("courses.jsp");
+            dispatcher.forward(request, response);
+            System.out.println("Request forwarded to courses.jsp");
         } catch (SQLException e) {
             throw new ServletException("Database error while retrieving courses", e);
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("courses.jsp");
-        dispatcher.forward(request, response);
     }
 
     @Override

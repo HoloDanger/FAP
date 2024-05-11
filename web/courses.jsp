@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="test.Course"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -141,6 +144,7 @@
             .schedule-container img {
                 max-width: 360px;
                 max-height: 244px;
+                min-width: 360px;
                 margin-bottom: 20px;
                 margin-top: -10px;
                 margin-left: 20px;
@@ -150,7 +154,7 @@
             .schedule-container h2 {
                 text-align: center;
                 color: #333;
-                font-size: 36px;
+                font-size: 30px;
                 margin-top: 0px;
             }
             .schedule-container p {
@@ -198,107 +202,66 @@
                 margin-top: 60px;
             }
 
+            button a {
+                text-decoration: none;
+            }
+
         </style>
     </head>
     <body>
 
         <header>
             <nav>
-                <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="index.jsp"></a></button>
-                <button class="nav" href="#">Courses</button>
-                <button class="nav" href="#">News</button>
-                <button class="nav" href="#">Careers</button>
-                <button class="nav" href="#">About</button>
-                <button class="nav" href="#">Contact Us</button>
-                <form class="login" action="LoginServlet" method="POST">
-                    <button type="submit" name="account">Account</button>
-                </form>
-
-
-
+                <button class="active-learning"><img src="https://activelearning.ph/wp-content/uploads/2021/03/logo-white.png"><a class="login" href="login.jsp"></a></button>
+                <a href="courses.jsp" class="nav"><button>Courses</button></a>
+                <a href="https://activelearning.ph/news/" class="nav"><button class="nav" href="#">News</button></a>
+                <a href="https://activelearning.ph/careers/" class="nav"><button class="nav" href="#">Careers</button></a>
+                <a href="https://activelearning.ph/about/" class="nav"><button class="nav" href="#">About</button></a>
+                <a href="https://activelearning.ph/contact/" class="nav"><button class="nav" href="#">Contact Us</button></a>
+                <button class="login" href="#"><a class="login" href="instructor_myaccount.jsp">Account</a></button>
             </nav>
         </header>
 
-        <div class="header-text">IT and Project Management Training Philippines - ActiveLearning, Inc.</div>
+        <div class="header-text">${applicationScope.header}</div>
 
         <div class="body">
-
+            <h1>Course List</h1>
+            <form action="CourseServlet" method="get">
+                <input type="submit" value="View Courses" id="viewCoursesButton">
+            </form>
+            <script>
+                document.getElementById('viewCoursesButton').addEventListener('click', function (event) {
+                    setTimeout(() => {
+                        this.style.display = 'none';
+                    }, 10);
+                });
+            </script>
+            <%
+                List<Course> courses = (List<Course>) request.getAttribute("courses");
+                if (courses != null && !courses.isEmpty()) {
+                    for (Course course : courses) {
+            %>
             <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
+                <h2><%= course.getCourseName()%></h2>
+                <button class="banner"><img src="<%= course.getBanner()%>" alt="Course Banner" class="profile-pic"></button>
+                <p>Course Instructor: <%= course.getInstructor()%></p>
+                <p>Course Start Date: <%= new SimpleDateFormat("yyyy-MM-dd").format(course.getStartDate())%></p>
+                <p>Course End Date: <%= new SimpleDateFormat("yyyy-MM-dd").format(course.getEndDate())%></p>
+                <p>Course Time: <%= course.getCourseTime()%></p>
                 <button class="unenroll">Enroll</button>
             </div>
-            <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
-                <button class="unenroll">Enroll</button>
-            </div>
-            <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
-                <button class="unenroll">Enroll</button>
-            </div>
-            <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
-                <button class="unenroll">Enroll</button>
-            </div>
-            <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
-                <button class="unenroll">Enroll</button>
-            </div>
-            <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
-                <button class="unenroll">Enroll</button>
-            </div>
-            <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
-                <button class="unenroll">Enroll</button>
-            </div>
-            <div class="schedule-container">
-                <h2>Course Name</h2>
-                <button class="banner"><img src="https://i.imgur.com/j6LbIzT.png" alt="Profile Picture" class="profile-pic"></button>
-                <p>Course Instructor: Juan Dela Cruz</p>
-                <p>Course Start Date: 12/34/5678</p>
-                <p>Course End Date: 12/34/5678</p>
-                <p>Course Time: M 1:00pm - 2:00pm</p>
-                <button class="unenroll">Enroll</button>
-            </div>
+            <%
+                }
+            } else {
+            %>
+            <p>No courses available.</p>
+            <%
+                }
+            %>
         </div>
 
         <footer>
-            <div class="footer-text">© 2024 ActiveLearning, Inc. All Rights Reserved.</div>
+            <div class="footer-text">${applicationScope.footer}</div>
         </footer>
 
     </body>

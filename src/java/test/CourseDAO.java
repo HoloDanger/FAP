@@ -34,6 +34,7 @@ public class CourseDAO {
 
                 Course course = new Course(courseName, instructor, startDate, endDate, courseTime, banner);
                 listCourse.add(course);
+                System.out.println("Added course: " + course);
             }
         } catch (SQLException e) {
             System.err.println("Error fetching courses:" + e.getMessage());
